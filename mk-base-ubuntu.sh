@@ -9,10 +9,10 @@ if [ ! -d $TARGET_ROOTFS_DIR ] ; then
 
     if [ ! -e ubuntu-base-18.04-base-arm64.tar.gz ]; then
         echo "\033[36m wget ubuntu-base-18.04-base-arm64.tar.gz \033[0m"
-        wget -c http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04-base-arm64.tar.gz
+        wget -c http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04.5-base-arm64.tar.gz
     fi
 
-    sudo tar -xzvf ubuntu-base-18.04-base-arm64.tar.gz -C $TARGET_ROOTFS_DIR/
+    sudo tar -xzvf ubuntu-base-18.04.5-base-arm64.tar.gz -C $TARGET_ROOTFS_DIR/
     sudo cp -b /etc/resolv.conf $TARGET_ROOTFS_DIR/etc/resolv.conf
     sudo cp -a /usr/bin/qemu-aarch64-static $TARGET_ROOTFS_DIR/usr/bin/
     sudo cp -b sources.list $TARGET_ROOTFS_DIR/etc/apt/sources.list
@@ -35,8 +35,16 @@ cat <<EOF | sudo chroot $TARGET_ROOTFS_DIR/
 apt-get -y update
 apt-get -f -y upgrade
 
-apt-get -f -y remove blueman xfce4*
-apt-get -f -y install apt-utils inetutils-ping vim git net-tools ubuntu-advantage-tools onboard glmark2-es2 xubuntu-core
+
+apt install -y lubuntu-desktop
+apt install -y sudo rsyslog wget gdb net-tools inetutils-ping openssh-server ifupdown alsa-utils python vim ntp git libssl-dev vsftpd tcpdump can-utils i2c-tools strace network-manager onboard evtest
+apt install -y language-pack-zh-han* language-pack-en $(check-language-support) ibus-libpinyin language-pack-gnome-zh-hans gnome-getting-started-docs-zh-hk
+
+apt install -y blueman
+        echo exit 101 > /usr/sbin/policy-rc.d
+        chmod +x /usr/sbin/policy-rc.d
+        apt install -y blueman
+        rm -f /usr/sbin/policy-rc.d
 
 HOST=ubuntu-box
 
