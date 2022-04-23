@@ -111,9 +111,9 @@ echo -e "\033[36m Install camera.................... \033[0m"
 
 #---------Xserver---------
 echo -e "\033[36m Install Xserver.................... \033[0m"
-#\${APT_INSTALL} /packages/xserver/*.deb
+\${APT_INSTALL} /packages/xserver/*.deb
 
-#apt-mark hold xserver-common xserver-xorg-core xserver-xorg-legacy
+apt-mark hold xserver-common xserver-xorg-core xserver-xorg-legacy
 
 #---------update chromium-----
 #\${APT_INSTALL} /packages/chromium/*.deb
@@ -132,7 +132,7 @@ sed -i "1aexport LD_PRELOAD=libdrm-cursor.so.1" /usr/bin/X
 
 #------------------blueman------------
 echo -e "\033[36m Install blueman.................... \033[0m"
-\${APT_INSTALL} /packages/blueman/*.deb
+#\${APT_INSTALL} /packages/blueman/*.deb
 
 #------------------rkwifibt------------
 echo -e "\033[36m Install rkwifibt.................... \033[0m"
@@ -178,11 +178,11 @@ apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark hold
 
 #------------------ffmpeg------------
 \${APT_INSTALL} ffmpeg
-#\${APT_INSTALL} /packages/ffmpeg/*.deb
+\${APT_INSTALL} /packages/ffmpeg/*.deb
 
 #------------------mpv------------
 \${APT_INSTALL} mpv
-#\${APT_INSTALL} /packages/mpv/*.deb
+\${APT_INSTALL} /packages/mpv/*.deb
 
 #---------------Custom Script--------------
 systemctl mask systemd-networkd-wait-online.service
