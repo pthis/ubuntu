@@ -108,6 +108,7 @@ echo -e "\033[36m Install camera.................... \033[0m"
 #\${APT_INSTALL} /packages/rkisp/*.deb
 \${APT_INSTALL} /packages/rkaiq/*.deb
 \${APT_INSTALL} /packages/libv4l/*.deb
+\${APT_INSTALL} /packages/libmali/libmali-valhall-g610-g6p0-x11*.deb
 
 #---------Xserver---------
 echo -e "\033[36m Install Xserver.................... \033[0m"
@@ -173,9 +174,6 @@ source ~/.bashrc
 
 #ln -sf /usr/bin/startxfce4 /etc/alternatives/x-session-manager
 
-# mark package to hold
-apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark hold
-
 #------------------ffmpeg------------
 \${APT_INSTALL} ffmpeg
 \${APT_INSTALL} /packages/ffmpeg/*.deb
@@ -188,6 +186,9 @@ apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark hold
 systemctl mask systemd-networkd-wait-online.service
 systemctl mask NetworkManager-wait-online.service
 rm /lib/systemd/system/wpa_supplicant@.service
+
+# mark package to hold
+apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark hold
 
 #---------------Clean--------------
 rm -rf /var/lib/apt/lists/*
